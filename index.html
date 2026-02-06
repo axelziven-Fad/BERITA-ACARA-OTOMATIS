@@ -217,7 +217,7 @@
         const CONFIG = {
             api: 'sppg_v21_api', logo: 'sppg_v21_logo', aturan: 'sppg_v21_aturan',
             pejabat: [
-                {n:"Fadlan Kharisma Aji Nugroho, S.Pd", j:"Ka SPPG Kulon Progo Panjatan 2"},
+                {n:"Fadlan Kharisma Aji Nugroho, S.Pd", j:"Ka SPPG Kulon Progo Panjatan Panjatan 2"},
                 {n:"Ismiyati", j:"Perwakilan Yayasan YPPSDP"},
                 {n:"Ririn Sri Lestari", j:"Pemilik Dapur"},
                 {n:"Ana Febriani", j:"Ahli Gizi"},
@@ -304,7 +304,7 @@
             const d = new Date(document.getElementById('tglSurat').value);
             const hari = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"][d.getDay()];
             const bulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"][d.getMonth()];
-            const pembuka = `Pada hari ini <b>${hari}</b>, tanggal <b>${d.getDate()}</b> bulan <b>${bulan}</b> tahun <b>${d.getFullYear()}</b>, bertempat di Kantor SPPG Kulon Progo Panjatan 2, kami yang bertanda tangan di bawah ini menerangkan bahwa:`;
+            const pembuka = `Pada hari ini <b>${hari}</b>, tanggal <b>${d.getDate()}</b> bulan <b>${bulan}</b> tahun <b>${d.getFullYear()}</b>, bertempat di Kantor SPPG Kulon Progo Panjatan Panjatan 2, kami yang bertanda tangan di bawah ini menerangkan bahwa:`;
             
             let hk=""; if(document.getElementById('cekHukum').checked){ const dn=document.getElementById('dasarNomor').value; const dp=document.getElementById('dasarPerihal').value; if(dn) hk=`DASAR HUKUM: ${dn} tentang ${dp}.`; }
 
@@ -430,5 +430,6 @@
     </script>
 </body>
 </html>
+
 
 
