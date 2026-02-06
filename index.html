@@ -217,10 +217,11 @@
         const CONFIG = {
             api: 'sppg_v21_api', logo: 'sppg_v21_logo', aturan: 'sppg_v21_aturan',
             pejabat: [
-                {n:"Fadlan Kharisma Aji Nugroho, S.Pd", j:"Ka SPPG Panjatan 002"},
+                {n:"Fadlan Kharisma Aji Nugroho, S.Pd", j:"Ka SPPG Kulon Progo Panjatan 2"},
+                {n:"Ismiyati", j:"Perwakilan Yayasan YPPSDP"},
                 {n:"Ririn Sri Lestari", j:"Pemilik Dapur"},
                 {n:"Ana Febriani", j:"Ahli Gizi"},
-                {n:"Rezky Windu Antara, S.Ak.", j:"Staf Administrasi"}
+                {n:"Rezky Windu Antara, S.Ak.", j:"Akuntan"}
             ]
         };
 
@@ -303,23 +304,23 @@
             const d = new Date(document.getElementById('tglSurat').value);
             const hari = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"][d.getDay()];
             const bulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"][d.getMonth()];
-            const pembuka = `Pada hari ini <b>${hari}</b>, tanggal <b>${d.getDate()}</b> bulan <b>${bulan}</b> tahun <b>${d.getFullYear()}</b>, bertempat di Kantor SPPG Panjatan 002, kami yang bertanda tangan di bawah ini menerangkan bahwa:`;
+            const pembuka = `Pada hari ini <b>${hari}</b>, tanggal <b>${d.getDate()}</b> bulan <b>${bulan}</b> tahun <b>${d.getFullYear()}</b>, bertempat di Kantor SPPG Kulon Progo Panjatan 2, kami yang bertanda tangan di bawah ini menerangkan bahwa:`;
             
             let hk=""; if(document.getElementById('cekHukum').checked){ const dn=document.getElementById('dasarNomor').value; const dp=document.getElementById('dasarPerihal').value; if(dn) hk=`DASAR HUKUM: ${dn} tentang ${dp}.`; }
 
             // PROMPT UPGRADED (V21: PRECISION)
             const prompt = `
-            Role: Sekretaris Negara Profesional.
-            Tugas: Buat Isi Berita Acara yang SUBSTANTIF, PADAT, dan JELAS.
+            Role: Notaris dan Sekertaris dengan 30 tahun pengalamn.
+            Tugas: Buat Isi Berita Acara yang tegas, detail, lugas dan menggunakan kaidah Berita acara perusahaan besar.
             Masalah: "${m}". ${hk}
             
             INSTRUKSI STRUKTUR OUTPUT:
-            1. BRIDGING: 1 Kalimat pengantar formal. Contoh: "Berdasarkan evaluasi lapangan, disampaikan hal-hal berikut:"
+            1. BRIDGING: Kalimat pengantar formal jika ada landasan gunakan landasan. Contoh: "Berdasarkan evaluasi lapangan, disampaikan hal-hal berikut:"
             2. ISI (Poin-Poin Markdown -): 
-               - Tulis poin dengan kalimat EFEKTIF dan LUGAS (To The Point).
-               - Tetap sertakan ALASAN/SEBAB-AKIBAT yang logis, tapi jangan bertele-tele.
+               - Tulis poin dengan kalimat EFEKTIF dan LUGAS.
+               - Tetap sertakan ALASAN/SEBAB-AKIBAT yang logis.
                - Fokus pada inti masalah/solusi.
-            3. CLOSING: 1 Kalimat penutup formal.
+            3. CLOSING: Kalimat penutup formal.
             
             LARANGAN:
             - JANGAN ulangi kalimat pembuka "Pada hari ini...".
@@ -429,3 +430,4 @@
     </script>
 </body>
 </html>
+
