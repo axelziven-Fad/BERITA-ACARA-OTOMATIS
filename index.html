@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPPG BERITA ACARA</title>
+    <title>SPPG BERITA ACARA | V21 Precision</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,741 +12,420 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html-to-pdfmake/browser.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: '#4f46e5',
-                        secondary: '#1e293b',
-                    }
-                }
-            }
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <style>
-        body { background-color: #f3f4f6; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f1f5f9; color: #1e293b; }
         
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-        .loader { border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid #fff; border-radius: 50%; width: 18px; height: 18px; animation: spin 0.8s linear infinite; display: inline-block; margin-right: 8px; vertical-align: middle;}
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Editor Styles */
-        #editor { min-height: 350px; outline: none; line-height: 1.8; color: #334155; }
-        #editor ul { list-style-type: disc; margin-left: 1.2rem; padding-left: 0.5rem; }
-        #editor ol { list-style-type: decimal; margin-left: 1.2rem; padding-left: 0.5rem; }
-        #editor b, #editor strong { font-weight: 700; color: #0f172a; }
-        #editor h1, #editor h2, #editor h3 { font-weight: 700; margin-top: 1em; margin-bottom: 0.5em; }
-        
-        /* Modern Input Styling */
-        .input-modern {
-            width: 100%; padding: 0.75rem 1rem; 
-            background-color: #f8fafc; border: 1px solid #e2e8f0; 
-            border-radius: 0.75rem; transition: all 0.2s;
-            font-size: 0.875rem; color: #1e293b;
-        }
-        .input-modern:focus {
-            background-color: #fff; border-color: #6366f1; 
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); outline: none;
-        }
-        
-        .card-glass {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
+        /* Glass Panel */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
         }
 
-        .btn-tap { transition: transform 0.1s; }
-        .btn-tap:active { transform: scale(0.97); }
+        /* Editor A4 */
+        #editor { 
+            min-height: 29.7cm; 
+            width: 21cm; 
+            max-width: 100%;
+            padding: 2.54cm 2cm 2.54cm 3cm; /* Margin: Atas/Bawah/Kanan 2.54cm, Kiri 3cm */
+            margin: 0 auto;
+            outline: none; 
+            line-height: 1.25; 
+            color: #000;
+            background: white;
+            font-family: 'Times New Roman', serif; 
+            font-size: 12pt;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            text-align: justify;
+        }
+        #editor ul { list-style-type: disc; margin-left: 1.5em; margin-bottom: 1em; }
+        #editor ol { list-style-type: decimal; margin-left: 1.5em; margin-bottom: 1em; }
+        #editor li { padding-left: 5px; margin-bottom: 6px; } 
+        #editor p { margin-bottom: 1em; }
+
+        .input-std {
+            width: 100%; padding: 8px 12px; font-size: 13px;
+            border: 1px solid #cbd5e1; border-radius: 8px; background: #fff;
+            transition: all 0.2s;
+        }
+        .input-std:focus { border-color: #4f46e5; ring: 2px solid #e0e7ff; outline: none; }
+        
+        .btn-press:active { transform: scale(0.98); }
     </style>
 </head>
-<body class="text-slate-600 pb-20">
+<body class="pb-24">
 
-    <div class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 py-3 flex justify-between items-center shadow-sm">
+    <div class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 px-6 py-3 flex justify-between items-center shadow-sm">
         <div class="flex items-center gap-3">
-            <div class="bg-indigo-600 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold text-lg">S</div>
+            <div class="bg-indigo-700 text-white w-10 h-10 rounded-xl flex items-center justify-center font-extrabold text-sm shadow-lg">BA</div>
             <div>
-                <h1 class="font-bold text-slate-800 leading-none">SPPG BERITA ACARA</h1>
-                <p class="text-[10px] text-slate-500 font-medium">SPPG PANJATAN 2 By Fadlan Kharisma</p>
+                <h1 class="font-bold text-slate-900 text-base leading-tight">SPPG BERITA ACARA</h1>
+                <p class="text-[11px] text-slate-500 font-medium">by Fadlan Kharisma</p>
             </div>
         </div>
-        <button onclick="bakukanAplikasi()" class="btn-tap bg-slate-800 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow hover:bg-slate-700 flex items-center gap-1">
-            <span>💾</span> <span class="hidden sm:inline">Simpan App</span>
+        <button onclick="simpanApp()" class="btn-press bg-slate-900 text-white px-5 py-2 rounded-lg text-xs font-bold shadow-md hover:bg-slate-800 transition flex gap-2 items-center">
+            💾 SIMPAN APP
         </button>
     </div>
 
-    <div class="max-w-7xl mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 mt-2">
+    <div class="max-w-[1600px] mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-8 mt-2">
         
-        <div class="lg:col-span-5 space-y-6">
+        <div class="lg:col-span-4 space-y-5">
             
-            <div class="card-glass rounded-2xl p-5 md:p-6 animate-fade-in">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-sm font-bold uppercase tracking-wider text-indigo-600 flex items-center gap-2">
-                        🤖 AI Configuration
-                    </h2>
-                    <span id="modelStatus" class="text-[10px] px-2 py-1 rounded-full bg-slate-100 text-slate-500 font-medium">Offline</span>
+            <div class="glass-panel p-5">
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-xs font-bold uppercase text-indigo-600 tracking-widest">🧠 Otak AI</h2>
+                    <span id="statusAI" class="text-[10px] bg-slate-100 px-2 py-0.5 rounded text-slate-400 font-bold">Offline</span>
+                </div>
+                <div class="space-y-3">
+                    <div class="relative">
+                        <input type="password" id="apiKey" class="input-std pr-8" placeholder="Paste API Key Gemini...">
+                        <button onclick="togglePass()" class="absolute right-3 top-2 text-slate-400 hover:text-indigo-600">👁️</button>
+                    </div>
+                    <div class="flex gap-2">
+                        <select id="modelSelect" class="input-std bg-slate-50 font-mono text-xs">
+                            <option value="gemini-1.5-flash">Gemini 1.5 Flash (Default)</option>
+                        </select>
+                        <button onclick="cekKoneksi()" class="btn-press bg-indigo-50 text-indigo-600 px-3 rounded-lg border border-indigo-100 font-bold text-xs w-24">🔄 Cek</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-panel p-5">
+                <div class="flex justify-between mb-3">
+                    <h2 class="text-xs font-bold uppercase text-slate-500 tracking-widest">Identitas Instansi</h2>
+                    <button onclick="hapusLogo()" class="text-[10px] text-red-500 font-bold hover:underline">Reset Logo</button>
+                </div>
+                
+                <div class="flex gap-3 mb-4 items-center">
+                    <div id="logoBox" class="hidden w-16 h-16 bg-white border border-slate-200 rounded-lg p-1 flex items-center justify-center relative shadow-sm">
+                        <img id="logoImg" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <label class="flex-1 h-16 border-2 border-dashed border-slate-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-slate-50 transition group">
+                        <span class="text-xl group-hover:scale-110 transition">📷</span>
+                        <span class="text-[10px] text-slate-400">Upload Logo (Auto-White)</span>
+                        <input type="file" id="logoInput" accept="image/*" class="hidden">
+                    </label>
+                    <canvas id="compressCanvas" class="hidden"></canvas>
                 </div>
 
-                <div class="space-y-4">
-                    <div class="relative">
-                        <input type="password" id="apiKey" class="input-modern pr-10" placeholder="Paste Gemini API Key...">
-                        <button onclick="toggleVisibility('apiKey')" class="absolute right-3 top-3 text-slate-400 hover:text-indigo-600">👁️</button>
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400">Nama Instansi</label>
+                        <input type="text" id="namaInstansi" class="input-std font-bold uppercase" value="BADAN GIZI NASIONAL">
                     </div>
-                    
-                    <div class="flex gap-2">
-                        <select id="modelSelect" class="input-modern bg-white font-medium text-xs">
-                            <option value="gemini-1.5-flash">Gemini 1.5 Flash (Recommended)</option>
-                            <option value="gemini-2.0-flash-exp">Gemini 2.0 Flash (Exp)</option>
-                            <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
-                        </select>
-                        <button onclick="cekModelTersedia()" id="btnCekModel" class="btn-tap bg-indigo-50 text-indigo-600 border border-indigo-100 rounded-xl px-3 hover:bg-indigo-100 transition">
-                            🔄
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400">Unit Pelayanan</label>
+                        <input type="text" id="alamatInstansi" class="input-std font-bold" value="SATUAN PELAYANAN PROGRAM GIZI (SPPG) KULON PROGO PANJATAN PANJATAN 2">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400">Alamat</label>
+                        <input type="text" id="alamatLengkap" class="input-std text-xs" value="Ds 2 Rt 08 Rw 04, Panjatan, Kulon Progo, Yogyakarta">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400">Kontak</label>
+                        <input type="text" id="kontakInstansi" class="input-std text-xs text-blue-600" value="+62 821-3375-2141 | sppgpanjatan002@gmail.com">
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-panel p-5">
+                <h2 class="text-xs font-bold uppercase text-slate-500 mb-3 tracking-widest">Detail Dokumen</h2>
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase">No. Urut</label>
+                        <input type="text" id="noUrut" class="input-std font-mono font-bold text-center" value="BA-001">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase">Tanggal</label>
+                        <input type="date" id="tglSurat" class="input-std text-center">
+                    </div>
+                </div>
+                <input type="text" id="noSuratFinal" class="w-full bg-slate-100 border-none rounded p-2 text-xs font-mono text-center text-slate-500 mb-4 font-bold" readonly>
+
+                <div class="border-t pt-3 border-slate-100">
+                    <div class="flex items-center gap-2 mb-2 cursor-pointer" onclick="document.getElementById('cekHukum').click()">
+                        <input type="checkbox" id="cekHukum" onchange="toggleHukum()" class="w-4 h-4 text-indigo-600 rounded cursor-pointer">
+                        <span class="text-xs font-bold text-slate-700">Pakai Dasar Hukum?</span>
+                    </div>
+
+                    <div id="boxHukum" class="hidden bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-3">
+                        <div class="flex gap-2">
+                            <select id="dbAturan" onchange="pilihAturan()" class="input-std text-xs">
+                                <option value="">-- Pilih Aturan --</option>
+                            </select>
+                            <button onclick="hapusAturan()" class="bg-red-100 text-red-500 px-3 rounded-lg hover:bg-red-200 font-bold">🗑️</button>
+                        </div>
+                        <input type="text" id="dasarNomor" class="input-std text-xs" placeholder="No. Aturan">
+                        <input type="date" id="dasarTanggal" class="input-std text-xs">
+                        <input type="text" id="dasarPerihal" class="input-std text-xs" placeholder="Perihal">
+                        <button onclick="simpanAturan()" class="w-full bg-blue-50 text-blue-600 text-xs py-2 rounded-lg font-bold hover:bg-blue-100 border border-blue-200">
+                            💾 Simpan ke Database
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="card-glass rounded-2xl p-5 md:p-6 animate-fade-in" style="animation-delay: 0.1s">
-                <div class="flex justify-between items-center mb-3">
-                    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500">Logo Instansi</h2>
-                    <span id="logoStatus" class="text-[10px] text-slate-400">Belum ada logo</span>
-                </div>
-
-                <div id="logoPreviewContainer" class="hidden relative group mb-4 text-center bg-slate-50 rounded-xl p-4 border border-dashed border-slate-300">
-                    <img id="logoPreview" class="h-20 object-contain mx-auto mix-blend-multiply" />
-                    <button onclick="hapusLogo()" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center shadow-lg hover:scale-110 transition text-xs font-bold">✕</button>
-                </div>
-
-                <div id="uploadContainer">
-                    <label class="btn-tap cursor-pointer flex flex-col items-center justify-center w-full h-24 border-2 border-slate-200 border-dashed rounded-xl bg-slate-50/50 hover:bg-indigo-50 hover:border-indigo-300 transition group">
-                        <span class="text-2xl mb-1 group-hover:scale-110 transition">📷</span>
-                        <p class="text-xs text-slate-400 font-medium group-hover:text-indigo-500">Tap to upload logo</p>
-                        <input type="file" id="logoInput" accept="image/*" class="hidden">
-                    </label>
-                </div>
-                <canvas id="compressCanvas" class="hidden"></canvas>
+            <div class="glass-panel p-1">
+                <textarea id="masalah" class="w-full p-4 bg-transparent border-none focus:ring-0 text-sm h-40 placeholder-slate-400 resize-none leading-relaxed" placeholder="Ceritakan kronologi masalahnya. AI akan menyusun kalimatnya agar detail tapi tidak bertele-tele..."></textarea>
             </div>
 
-            <div class="card-glass rounded-2xl p-5 md:p-6 animate-fade-in" style="animation-delay: 0.2s">
-                <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4">Detail Surat</h2>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="col-span-1">
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">No. Urut</label>
-                        <input type="text" id="inputNoUrut" class="input-modern font-mono text-center font-bold tracking-widest text-indigo-700" value="BA-001">
-                    </div>
-                    <div class="col-span-1">
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Tanggal</label>
-                        <input type="date" id="tanggalSurat" class="input-modern text-center font-medium">
-                    </div>
-                    <div class="col-span-2">
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Preview Nomor</label>
-                        <input type="text" id="nomorSurat" class="w-full bg-slate-100 border-none rounded-lg p-2 text-xs font-mono text-slate-500 text-center" readonly>
-                    </div>
-                </div>
-
-                <div class="mt-6 pt-4 border-t border-slate-100">
-                    <div class="flex items-center justify-between mb-3 cursor-pointer" onclick="document.getElementById('useDasarHukum').click()">
-                        <span class="text-sm font-bold text-slate-700">Pakai Dasar Aturan?</span>
-                        <div class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="useDasarHukum" onchange="toggleDasarHukum()" class="sr-only peer">
-                            <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
-                        </div>
-                    </div>
-
-                    <div id="containerDasarHukum" class="hidden space-y-3 mt-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                        <div class="flex gap-2">
-                             <select id="dbAturanSelect" onchange="pilihAturanDariDB()" class="w-full p-2 text-xs border border-slate-300 rounded-lg bg-white">
-                                 <option value="">-- Manual / Baru --</option>
-                             </select>
-                             <button onclick="hapusAturanDB()" class="text-red-500 p-2 hover:bg-red-50 rounded">🗑️</button>
-                        </div>
-                        <input type="text" id="dasarNomor" class="input-modern !p-2 !text-xs" placeholder="Nomor Aturan">
-                        <input type="date" id="dasarTanggal" class="input-modern !p-2 !text-xs">
-                        <input type="text" id="dasarPerihal" class="input-modern !p-2 !text-xs" placeholder="Perihal Aturan">
-                        <button onclick="simpanAturanKeDB()" class="w-full bg-blue-50 text-blue-600 text-xs py-2 rounded-lg font-bold hover:bg-blue-100">💾 Simpan ke Database</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-glass rounded-2xl p-1 animate-fade-in" style="animation-delay: 0.3s">
-                <textarea id="masalahText" class="w-full p-5 bg-transparent border-none focus:ring-0 text-sm md:text-base min-h-[150px] placeholder-slate-400" placeholder="Bro, ceritain masalahnya di sini.&#10;Contoh:&#10;Penyedia telat kirim makan siang jam 12.00 karena ban bocor di jalan Wates..."></textarea>
-            </div>
-
-            <button onclick="panggilGemini()" id="btnGenerate" class="btn-tap w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-lg py-4 rounded-2xl shadow-xl shadow-indigo-200 hover:shadow-2xl hover:shadow-indigo-300 transition-all flex justify-center items-center gap-2 group">
-                <span>✨</span> <span class="group-hover:tracking-wider transition-all">GENERATE MAGIC</span>
+            <button onclick="generateAI()" class="btn-press w-full bg-slate-900 text-white font-bold py-4 rounded-xl shadow-xl hover:bg-slate-800 transition flex justify-center items-center gap-2 group">
+                <span class="group-hover:rotate-12 transition">✨</span> BUAT NARASI (PADAT & JELAS)
             </button>
-
         </div>
 
-        <div class="lg:col-span-7 flex flex-col h-full animate-fade-in" style="animation-delay: 0.2s">
+        <div class="lg:col-span-8 flex flex-col h-full items-center">
             
-            <div class="bg-white rounded-t-2xl border-b border-slate-100 p-3 flex flex-wrap gap-2 items-center sticky top-[60px] z-40 shadow-sm">
-                <div class="flex gap-1 overflow-x-auto pb-1 no-scrollbar w-full sm:w-auto">
-                    <button onclick="execCmd('bold')" class="p-2 rounded-lg hover:bg-slate-100 font-bold text-slate-700 min-w-[36px]">B</button>
-                    <button onclick="execCmd('italic')" class="p-2 rounded-lg hover:bg-slate-100 italic text-slate-700 min-w-[36px]">I</button>
-                    <button onclick="execCmd('underline')" class="p-2 rounded-lg hover:bg-slate-100 underline text-slate-700 min-w-[36px]">U</button>
-                    <div class="w-px bg-slate-200 mx-1"></div>
-                    <button onclick="execCmd('insertUnorderedList')" class="p-2 rounded-lg hover:bg-slate-100 text-slate-700 min-w-[36px]">• List</button>
-                    <button onclick="execCmd('insertOrderedList')" class="p-2 rounded-lg hover:bg-slate-100 text-slate-700 min-w-[36px]">1. List</button>
-                    <div class="w-px bg-slate-200 mx-1"></div>
-                    <button onclick="toggleCase()" class="p-2 rounded-lg hover:bg-slate-100 text-xs font-bold text-slate-700 min-w-[36px]">aA</button>
-                </div>
-                <div class="ml-auto text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full uppercase">
-                    Ready to Edit
-                </div>
+            <div class="bg-white border border-slate-200 border-b-0 rounded-t-xl p-2 flex flex-wrap gap-1 sticky top-[68px] z-40 shadow-sm items-center w-full max-w-[21cm]">
+                <button onclick="cmd('bold')" class="p-1.5 hover:bg-slate-100 rounded font-bold min-w-[30px]">B</button>
+                <button onclick="cmd('italic')" class="p-1.5 hover:bg-slate-100 rounded italic min-w-[30px]">I</button>
+                <button onclick="cmd('underline')" class="p-1.5 hover:bg-slate-100 rounded underline min-w-[30px]">U</button>
+                <div class="w-px h-6 bg-slate-300 mx-2"></div>
+                <button onclick="cmd('insertUnorderedList')" class="p-1.5 hover:bg-slate-100 rounded">• List</button>
+                <button onclick="cmd('insertOrderedList')" class="p-1.5 hover:bg-slate-100 rounded">1. List</button>
+                <div class="w-px h-6 bg-slate-300 mx-2"></div>
+                <button onclick="cmd('justifyFull')" class="p-1.5 hover:bg-slate-100 rounded bg-slate-100 font-bold text-xs">Rata Kanan-Kiri</button>
             </div>
 
-            <div id="editor" contenteditable="true" class="flex-grow w-full bg-white p-6 md:p-8 md:rounded-b-2xl shadow-sm text-justify font-serif text-slate-800 focus:outline-none">
-                <p class="text-slate-300 italic text-center mt-10">
-                    Hasil analisis AI akan muncul di sini...<br>
-                    <span class="text-xs not-italic">Silakan edit manual jika perlu.</span>
+            <div id="editor" contenteditable="true" class="text-slate-900">
+                <p style="text-align: center; color: #cbd5e1; padding-top: 100px;">
+                    <em>Isi Berita Acara yang dihasilkan AI akan muncul di sini.</em>
                 </p>
             </div>
 
-            <div class="mt-6 bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-200">
-                <h3 class="font-bold text-slate-700 mb-4 flex items-center gap-2">
-                    ✍️ Tanda Tangan & Kop
-                </h3>
+            <div class="mt-6 bg-white rounded-xl border border-slate-200 p-6 shadow-sm w-full max-w-[21cm]">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest">Penanda Tangan</h3>
+                    <button onclick="tambahTTD()" class="text-xs bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-full font-bold hover:bg-indigo-100 border border-indigo-100">+ Tambah</button>
+                </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <input type="text" id="namaInstansi" class="input-modern font-bold uppercase text-xs" value="BADAN GIZI NASIONAL">
-                    <input type="text" id="alamatInstansi" class="input-modern font-bold text-xs" value="SATUAN PELAYANAN PROGRAM GIZI (SPPG) KULON PROGO PANJATAN PANJATAN 2">
-                    <input type="text" id="alamatLengkap" class="input-modern text-xs md:col-span-2" value="Ds 2 Rt 08 Rw 04, Panjatan, Kulon Progo, Yogyakarta">
-                    <input type="text" id="kontakInstansi" class="input-modern text-xs text-blue-600 md:col-span-2" value="+62 821-3375-2141 | sppgpanjatan002@gmail.com">
-                </div>
+                <div id="ttdContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
 
-                <div class="border-t border-slate-100 pt-4">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-xs font-bold text-slate-500 uppercase">Pejabat Penanda Tangan</span>
-                        <button onclick="tambahTTD()" class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1.5 rounded-full font-bold hover:bg-indigo-200">+ Add Person</button>
-                    </div>
-                    <div id="containerTTD" class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        </div>
-                </div>
+                <button onclick="downloadPDF()" class="btn-press w-full bg-emerald-600 text-white font-bold py-4 px-4 rounded-xl shadow-lg shadow-emerald-200 hover:bg-emerald-700 transition flex justify-center items-center gap-2">
+                    📄 DOWNLOAD PDF (RAPID & LENGKAP)
+                </button>
             </div>
-
-            <button onclick="downloadPDF()" id="btnDownload" class="btn-tap mt-4 w-full bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-emerald-200 hover:bg-emerald-700 transition flex justify-center items-center gap-2 mb-8 md:mb-0">
-                📄 DOWNLOAD PDF FINAL
-            </button>
         </div>
     </div>
 
     <script>
-        // === 1. VARIABEL PATEN (HARDCODED) ===
-        const HARDCODED_LOGO = ""; 
-        const HARDCODED_KEY = "";
-        
-        // Setup Awal
-        document.getElementById('tanggalSurat').valueAsDate = new Date();
-        const STORAGE_KEY_API = 'sppg_gemini_key';
-        const STORAGE_KEY_LOGO = 'sppg_logo_permanen';
-        const STORAGE_KEY_ATURAN = 'sppg_db_aturan'; 
+        // === CONFIG ===
+        const CONFIG = {
+            api: 'sppg_v21_api', logo: 'sppg_v21_logo', aturan: 'sppg_v21_aturan',
+            pejabat: [
+                {n:"Fadlan Kharisma Aji Nugroho, S.Pd", j:"Ka SPPG Panjatan 002"},
+                {n:"Ririn Sri Lestari", j:"Pemilik Dapur"},
+                {n:"Ana Febriani", j:"Ahli Gizi"},
+                {n:"Rezky Windu Antara, S.Ak.", j:"Staf Administrasi"}
+            ]
+        };
 
-        // === LOGIC NOMOR SURAT OTOMATIS (V10) ===
-        const inputNoUrut = document.getElementById('inputNoUrut');
-        const inputTanggal = document.getElementById('tanggalSurat');
-        const outputNomor = document.getElementById('nomorSurat');
+        let listTTD = [{...CONFIG.pejabat[0], s:"Yang Melaporkan"}, {...CONFIG.pejabat[1], s:"Mengetahui"}];
+        let listAturan = JSON.parse(localStorage.getItem(CONFIG.aturan) || "[]");
+        let logoBase64 = localStorage.getItem(CONFIG.logo);
 
-        function updateNomorSurat() {
-            const noUrut = inputNoUrut.value || "BA-000";
-            // Ambil tanggal dari input atau hari ini
-            let dateVal;
-            if (inputTanggal.value) {
-                dateVal = new Date(inputTanggal.value);
-            } else {
-                dateVal = new Date();
-            }
-            
-            const bulanRomawi = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
-            // getMonth() mulai dari 0 (Januari) sampai 11 (Desember)
-            const bulan = bulanRomawi[dateVal.getMonth() + 1] || "I"; 
-            const tahun = dateVal.getFullYear();
+        // === INIT ===
+        document.getElementById('tglSurat').valueAsDate = new Date();
+        document.getElementById('apiKey').value = localStorage.getItem(CONFIG.api) || "";
+        if(logoBase64) showLogo(logoBase64);
+        renderTTD(); renderAturan(); updateNomor();
 
-            // Format: BA-001/SPPG/I/2026
-            outputNomor.value = `${noUrut}/SPPG/${bulan}/${tahun}`;
-        }
+        // === LISTENERS ===
+        document.getElementById('apiKey').addEventListener('input', (e) => localStorage.setItem(CONFIG.api, e.target.value));
+        document.getElementById('noUrut').addEventListener('input', updateNomor);
+        document.getElementById('tglSurat').addEventListener('change', updateNomor);
 
-        // Pasang pendengar (listener)
-        inputNoUrut.addEventListener('input', updateNomorSurat);
-        inputTanggal.addEventListener('change', updateNomorSurat);
-        
-        // Jalanin sekali pas loading
-        updateNomorSurat();
-
-        // === DATABASE PEJABAT SPPG ===
-        const DATABASE_PEJABAT = [
-            { nama: "Fadlan Kharisma Aji Nugroho, S.Pd", jabatan: "Ka SPPG KULON PROGO PANJATAN PANJATAN 2" },
-            { nama: "Ririn Sri Lestari", jabatan: "Pemilik Dapur" },
-            { nama: "Ana Febriani", jabatan: "Ahli Gizi" },
-            { nama: "Rezky Windu Antara, S.Ak.", jabatan: "Staf Administrasi" },
-            { nama: "Ismiyati", jabatan: "Perwakilan Yayasan" }
-        ];
-
-        let listTTD = [
-            { ...DATABASE_PEJABAT[0], status: "Yang Melaporkan" },
-            { ...DATABASE_PEJABAT[1], status: "Mengetahui" }
-        ];
-
-        // === EDITOR TOOLBAR FUNCTIONS ===
-        function execCmd(command) {
-            document.execCommand(command, false, null);
-            document.getElementById('editor').focus();
-        }
-
-        function toggleCase() {
-            const selection = window.getSelection();
-            if (!selection.rangeCount) return;
-            
-            const text = selection.toString();
-            if (!text) return; // Harus select teks dulu
-
-            let replacement = "";
-            if (text === text.toUpperCase()) {
-                replacement = text.toLowerCase();
-            } else {
-                replacement = text.toUpperCase();
-            }
-            
-            document.execCommand('insertText', false, replacement);
-        }
-
-        // === LOGIC DATABASE ATURAN ===
-        let listAturanDB = JSON.parse(localStorage.getItem(STORAGE_KEY_ATURAN) || "[]");
-        renderDropdownAturan();
-
-        function renderDropdownAturan() {
-            const select = document.getElementById('dbAturanSelect');
-            select.innerHTML = '<option value="">-- Pilih dari Database --</option>';
-            listAturanDB.forEach((item, index) => {
-                const opt = document.createElement('option');
-                opt.value = index;
-                opt.text = `${item.nomor} (${item.perihal.substring(0, 30)}...)`;
-                select.appendChild(opt);
-            });
-        }
-
-        function simpanAturanKeDB() {
-            const nomor = document.getElementById('dasarNomor').value;
-            const tanggal = document.getElementById('dasarTanggal').value;
-            const perihal = document.getElementById('dasarPerihal').value;
-            if(!nomor || !tanggal || !perihal) return alert("Isi lengkap dulu.");
-            listAturanDB.push({ nomor, tanggal, perihal });
-            localStorage.setItem(STORAGE_KEY_ATURAN, JSON.stringify(listAturanDB));
-            renderDropdownAturan();
-            document.getElementById('dbAturanSelect').value = listAturanDB.length - 1;
-            alert("Tersimpan!");
-        }
-
-        function pilihAturanDariDB() {
-            const index = document.getElementById('dbAturanSelect').value;
-            if(index === "") {
-                document.getElementById('dasarNomor').value = "";
-                document.getElementById('dasarTanggal').value = "";
-                document.getElementById('dasarPerihal').value = "";
-                return;
-            }
-            const item = listAturanDB[index];
-            document.getElementById('dasarNomor').value = item.nomor;
-            document.getElementById('dasarTanggal').value = item.tanggal;
-            document.getElementById('dasarPerihal').value = item.perihal;
-        }
-
-        function hapusAturanDB() {
-            const index = document.getElementById('dbAturanSelect').value;
-            if(index === "") return alert("Pilih dulu.");
-            if(confirm("Hapus?")) {
-                listAturanDB.splice(index, 1);
-                localStorage.setItem(STORAGE_KEY_ATURAN, JSON.stringify(listAturanDB));
-                renderDropdownAturan();
-                document.getElementById('dasarNomor').value = "";
-            }
-        }
-
-        // === AUTO DIAGNOSTIC MODEL ===
-        async function cekModelTersedia() {
-            const apiKey = document.getElementById('apiKey').value.trim();
-            const btn = document.getElementById('btnCekModel');
-            const status = document.getElementById('modelStatus');
-            const select = document.getElementById('modelSelect');
-
-            if (!apiKey) { alert("Isi API Key dulu Bro!"); return; }
-
-            btn.innerHTML = "⏳";
-            btn.disabled = true;
-            status.innerHTML = "Connecting...";
-            status.className = "text-[10px] px-2 py-1 rounded-full bg-orange-100 text-orange-600 font-medium";
-
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
-                const data = await response.json();
-                if (data.error) throw new Error(data.error.message);
-                if (!data.models) throw new Error("Tidak ada model.");
-
-                const validModels = data.models.filter(m => 
-                    m.supportedGenerationMethods.includes("generateContent") &&
-                    (m.name.includes("gemini") || m.name.includes("flash"))
-                );
-
-                if (validModels.length === 0) throw new Error("Gak ada model yang cocok.");
-
-                select.innerHTML = "";
-                validModels.forEach(m => {
-                    const idBersih = m.name.replace("models/", "");
-                    const option = document.createElement("option");
-                    option.value = idBersih;
-                    option.text = `${m.displayName} (${idBersih})`;
-                    select.appendChild(option);
-                });
-
-                status.innerHTML = `Online`;
-                status.className = "text-[10px] px-2 py-1 rounded-full bg-green-100 text-green-600 font-bold";
-                alert(`Koneksi Sukses! List model sudah diupdate.`);
-
-            } catch (error) {
-                console.error(error);
-                status.innerHTML = `Error`;
-                status.className = "text-[10px] px-2 py-1 rounded-full bg-red-100 text-red-600 font-bold";
-                alert(`GAGAL KONEKSI:\n${error.message}`);
-            } finally {
-                btn.innerHTML = "🔄";
-                btn.disabled = false;
-            }
-        }
-
-        function toggleDasarHukum() {
-            const checkbox = document.getElementById('useDasarHukum');
-            const container = document.getElementById('containerDasarHukum');
-            if (checkbox.checked) { container.classList.remove('hidden'); } 
-            else { container.classList.add('hidden'); }
-        }
-
-        function renderTTD() {
-            const container = document.getElementById('containerTTD');
-            container.innerHTML = '';
-            listTTD.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.className = "bg-slate-50 p-3 rounded-xl border border-slate-200 relative group";
-                let optionsDB = `<option value="">-- DB --</option>`;
-                DATABASE_PEJABAT.forEach(p => { optionsDB += `<option value="${p.nama}|${p.jabatan}">${p.nama}</option>`; });
-
-                div.innerHTML = `
-                    <div class="flex justify-between mb-2">
-                        <span class="text-[10px] font-bold text-slate-400 bg-white px-2 py-0.5 rounded border border-slate-100">#${index + 1}</span>
-                        ${index > 1 ? `<button onclick="hapusTTD(${index})" class="text-red-500 text-xs font-bold hover:text-red-700">✕</button>` : ''}
-                    </div>
-                    <div class="space-y-2">
-                        <select onchange="pilihDariDB(this, ${index})" class="w-full p-1.5 border rounded-lg text-xs bg-white text-slate-700">${optionsDB}</select>
-                        <input type="text" placeholder="Status (Mis: Saksi)" value="${item.status || ''}" oninput="updateTTD(${index}, 'status', this.value)" class="w-full p-2 border rounded-lg text-xs placeholder-slate-400 bg-white">
-                        <input type="text" placeholder="Nama Lengkap" value="${item.nama}" oninput="updateTTD(${index}, 'nama', this.value)" class="w-full p-2 border rounded-lg text-xs font-bold bg-white">
-                        <input type="text" placeholder="Jabatan" value="${item.jabatan}" oninput="updateTTD(${index}, 'jabatan', this.value)" class="w-full p-2 border rounded-lg text-xs text-slate-500 bg-white">
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-        function tambahTTD() { if (listTTD.length >= 5) return alert("Max 5 orang."); listTTD.push({ nama: "", jabatan: "", status: "Saksi" }); renderTTD(); }
-        function hapusTTD(index) { listTTD.splice(index, 1); renderTTD(); }
-        function updateTTD(index, field, value) { listTTD[index][field] = value; }
-        function pilihDariDB(select, index) { 
-            const val = select.value; 
-            if (val) { const [nama, jabatan] = val.split('|'); listTTD[index].nama = nama; listTTD[index].jabatan = jabatan; renderTTD(); } 
-        }
-        renderTTD();
-
-        let logoBase64 = HARDCODED_LOGO || localStorage.getItem(STORAGE_KEY_LOGO);
-        let currentKey = HARDCODED_KEY || localStorage.getItem(STORAGE_KEY_API);
-        if (currentKey) document.getElementById('apiKey').value = currentKey;
-        if (logoBase64) tampilkanPreviewLogo(logoBase64);
-        
-        document.getElementById('apiKey').addEventListener('input', (e) => localStorage.setItem(STORAGE_KEY_API, e.target.value));
-        
-        // === TURBO: AUTO COMPRESS IMAGE ON UPLOAD ===
+        // === LOGO HANDLING ===
         document.getElementById('logoInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(event) {
+            const file = e.target.files[0]; if(!file) return;
+            Swal.fire({title:'Memproses Logo...', didOpen:()=>Swal.showLoading()});
+            const r = new FileReader();
+            r.onload = function(ev) {
                 const img = new Image();
                 img.onload = function() {
-                    const canvas = document.getElementById('compressCanvas');
-                    const ctx = canvas.getContext('2d');
-                    
-                    const MAX_WIDTH = 250;
-                    const scaleSize = MAX_WIDTH / img.width;
-                    canvas.width = MAX_WIDTH;
-                    canvas.height = img.height * scaleSize;
-
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
-                    
-                    try {
-                        localStorage.setItem(STORAGE_KEY_LOGO, compressedDataUrl);
-                        logoBase64 = compressedDataUrl;
-                        tampilkanPreviewLogo(compressedDataUrl);
-                        alert("Logo berhasil dikompres & disimpan!");
-                    } catch (err) {
-                        alert("Gagal simpan logo: " + err.message);
-                    }
+                    const cvs = document.getElementById('compressCanvas');
+                    const ctx = cvs.getContext('2d');
+                    const scale = 300 / img.width; 
+                    cvs.width = 300; cvs.height = img.height * scale;
+                    ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,cvs.width,cvs.height); // White BG
+                    ctx.drawImage(img, 0, 0, cvs.width, cvs.height);
+                    const d = cvs.toDataURL('image/jpeg', 0.95);
+                    try { localStorage.setItem(CONFIG.logo, d); logoBase64=d; showLogo(d); Swal.fire('Sip!', 'Logo beres.', 'success'); } 
+                    catch(err) { Swal.fire('Full', 'Storage penuh.', 'error'); }
                 }
-                img.src = event.target.result;
+                img.src = ev.target.result;
             }
-            reader.readAsDataURL(file);
+            r.readAsDataURL(file);
         });
+        function showLogo(s) { document.getElementById('logoImg').src=s; document.getElementById('logoBox').classList.remove('hidden'); }
+        function hapusLogo() { Swal.fire({title:'Hapus?',showCancelButton:true}).then(r=>{if(r.isConfirmed){localStorage.removeItem(CONFIG.logo);logoBase64=null;document.getElementById('logoBox').classList.add('hidden');}})}
 
-        function tampilkanPreviewLogo(src) {
-            document.getElementById('logoPreview').src = src;
-            document.getElementById('logoPreviewContainer').classList.remove('hidden');
-            document.getElementById('uploadContainer').classList.add('hidden');
-            document.getElementById('logoStatus').innerText = "Logo OK";
-            document.getElementById('logoStatus').className = "text-[10px] text-emerald-600 font-bold bg-emerald-100 px-2 py-0.5 rounded";
-        }
-        function hapusLogo() {
-            if(confirm("Hapus logo?")) {
-                localStorage.removeItem(STORAGE_KEY_LOGO);
-                logoBase64 = null;
-                document.getElementById('logoPreviewContainer').classList.add('hidden');
-                document.getElementById('uploadContainer').classList.remove('hidden');
-                document.getElementById('logoStatus').innerText = "Belum ada logo";
+        // === ATURAN & TTD ===
+        function renderAturan(){const s=document.getElementById('dbAturan');s.innerHTML='<option value="">-- DB Aturan --</option>';listAturan.forEach((x,i)=>{let o=document.createElement('option');o.value=i;o.text=`${x.n}`;s.appendChild(o)});}
+        function simpanAturan(){const n=document.getElementById('dasarNomor').value,t=document.getElementById('dasarTanggal').value,p=document.getElementById('dasarPerihal').value;if(n&&p){listAturan.push({n,t,p});localStorage.setItem(CONFIG.aturan,JSON.stringify(listAturan));renderAturan();}}
+        function hapusAturan(){const i=document.getElementById('dbAturan').value;if(i!==""){listAturan.splice(i,1);localStorage.setItem(CONFIG.aturan,JSON.stringify(listAturan));renderAturan();}}
+        function pilihAturan(){const i=document.getElementById('dbAturan').value;if(i!==""){const x=listAturan[i];document.getElementById('dasarNomor').value=x.n;document.getElementById('dasarTanggal').value=x.t;document.getElementById('dasarPerihal').value=x.p;}}
+        function toggleHukum(){document.getElementById('boxHukum').classList.toggle('hidden');}
+        
+        function renderTTD(){const c=document.getElementById('ttdContainer');c.innerHTML='';listTTD.forEach((t,i)=>{let ops='';CONFIG.pejabat.forEach(p=>ops+=`<option value="${p.n}|${p.j}">${p.n}</option>`);let d=document.createElement('div');d.className="bg-slate-50 p-2 rounded border text-xs";d.innerHTML=`<div class="flex justify-between mb-1"><span class="font-bold text-slate-400">#${i+1}</span>${i>1?`<button onclick="listTTD.splice(${i},1);renderTTD()" class="text-red-500">✕</button>`:''}</div><select onchange="let[n,j]=this.value.split('|');listTTD[${i}].n=n;listTTD[${i}].j=j;renderTTD()" class="input-std mb-1">${ops}</select><input oninput="listTTD[${i}].s=this.value" value="${t.s}" class="input-std mb-1"><input oninput="listTTD[${i}].n=this.value" value="${t.n}" class="input-std font-bold"><input oninput="listTTD[${i}].j=this.value" value="${t.j}" class="input-std text-slate-500">`;c.appendChild(d);});}
+        function tambahTTD(){if(listTTD.length<4){listTTD.push({n:"",j:"",s:"Saksi"});renderTTD();}}
+
+        // === AUTO MODEL ===
+        async function cekKoneksi() {
+            const k=document.getElementById('apiKey').value; if(!k) return Swal.fire('Isi API Key','','warning');
+            const b=document.getElementById('statusAI'); b.innerText="Checking...";
+            try { 
+                const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${k}`);
+                const d = await r.json();
+                if(d.error) throw new Error(d.error.message);
+                const ms = d.models.filter(m => m.supportedGenerationMethods.includes("generateContent"));
+                const s = document.getElementById('modelSelect'); s.innerHTML = "";
+                ms.forEach(m => { let o=document.createElement('option'); o.value=m.name.replace("models/",""); o.text=m.displayName; s.appendChild(o); });
+                b.innerText="Online ✅"; b.className="text-[10px] bg-green-100 px-2 py-0.5 rounded text-green-600 font-bold";
+                Swal.fire('Sip!', 'Model AI siap.', 'success');
+            } catch(e){ 
+                b.innerText="Error ❌"; Swal.fire('Gagal', e.message, 'error'); 
             }
         }
-        function toggleVisibility(id) { const x = document.getElementById(id); x.type = x.type === "password" ? "text" : "password"; }
 
-        function bakukanAplikasi() {
-            const k = document.getElementById('apiKey').value;
-            if(!logoBase64 || !k) return alert("Lengkapi data dulu.");
-            if(!confirm("Simpan Permanen?")) return;
-            let html = document.documentElement.outerHTML;
-            html = html.replace('const HARDCODED_LOGO = "";', `const HARDCODED_LOGO = "${logoBase64}";`);
-            html = html.replace('const HARDCODED_KEY = "";', `const HARDCODED_KEY = "${k}";`);
-            const blob = new Blob([html], {type: 'text/html'});
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'sppg-aplikasi-paten.html';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            alert("SUKSES! File paten didownload.");
-        }
-
-        function terbilang(nilai) {
-            const angka = Math.abs(nilai);
-            const baca = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
-            let hasil = ""; 
-            if (angka < 12) hasil = " " + baca[angka];
-            else if (angka < 20) hasil = terbilang(angka - 10) + " Belas";
-            else if (angka < 100) hasil = terbilang(Math.floor(angka / 10)) + " Puluh" + terbilang(angka % 10);
-            else if (angka < 200) hasil = " Seratus" + terbilang(angka - 100);
-            else if (angka < 1000) hasil = terbilang(Math.floor(angka / 100)) + " Ratus" + terbilang(angka % 100);
-            else if (angka < 2000) hasil = " Seribu" + terbilang(angka - 1000);
-            else if (angka < 1000000) hasil = terbilang(Math.floor(angka / 1000)) + " Ribu" + terbilang(angka % 1000);
-            else hasil = terbilang(Math.floor(angka / 1000000)) + " Juta" + terbilang(angka % 1000000);
-            return hasil;
-        }
-
-        function getSimpleDate(dateInput) {
-            const date = new Date(dateInput);
-            const bulanIndo = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-            return `${date.getDate()} ${bulanIndo[date.getMonth()]} ${date.getFullYear()}`;
-        }
-
-        async function panggilGemini() {
-            const apiKey = document.getElementById('apiKey').value.trim();
-            const masalah = document.getElementById('masalahText').value;
-            const modelName = document.getElementById('modelSelect').value; 
-            const btn = document.getElementById('btnGenerate');
-            // GANTI: Targetnya sekarang div editor, bukan textarea
-            const editor = document.getElementById('editor');
+        // === AI GENERATOR (V21: PADAT & JELAS) ===
+        async function generateAI() {
+            const k=document.getElementById('apiKey').value, m=document.getElementById('masalah').value, mod=document.getElementById('modelSelect').value;
+            if(!k||!m) return Swal.fire('Data Kurang','Isi API Key & Masalah','warning');
             
-            const useDasar = document.getElementById('useDasarHukum').checked;
-            let textDasarHukum = "";
-            if (useDasar) {
-                const dNomor = document.getElementById('dasarNomor').value;
-                const dTanggal = document.getElementById('dasarTanggal').value;
-                const dPerihal = document.getElementById('dasarPerihal').value;
-                let tglIndo = dTanggal; 
-                if(dTanggal) { const d = new Date(dTanggal); tglIndo = `${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`; }
-                if (dNomor || dPerihal) textDasarHukum = `LANDASAN HUKUM/ATURAN YANG MENJADI DASAR: ${dNomor} tanggal ${tglIndo} tentang ${dPerihal}. Gunakan informasi ini sebagai referensi utama jika relevan.`;
-            }
+            Swal.fire({title:'AI Sedang Bekerja...', didOpen:()=>Swal.showLoading()});
+            
+            // Konteks Waktu
+            const d = new Date(document.getElementById('tglSurat').value);
+            const hari = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"][d.getDay()];
+            const bulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"][d.getMonth()];
+            const pembuka = `Pada hari ini <b>${hari}</b>, tanggal <b>${d.getDate()}</b> bulan <b>${bulan}</b> tahun <b>${d.getFullYear()}</b>, bertempat di Kantor SPPG Panjatan 002, kami yang bertanda tangan di bawah ini menerangkan bahwa:`;
+            
+            let hk=""; if(document.getElementById('cekHukum').checked){ const dn=document.getElementById('dasarNomor').value; const dp=document.getElementById('dasarPerihal').value; if(dn) hk=`DASAR HUKUM: ${dn} tentang ${dp}.`; }
 
-            if (!apiKey) return alert("API Key kosong!");
-            if (!masalah) return alert("Masalah kosong!");
-
-            btn.innerHTML = '<span class="loader"></span> Thinking...';
-            btn.disabled = true;
-            editor.innerHTML = "<em>Sedang menunggu balasan Gemini...</em>";
-
+            // PROMPT UPGRADED (V21: PRECISION)
             const prompt = `
-                Bertindaklah sebagai Sekretaris Profesional di Instansi Pemerintahan Indonesia (Badan Gizi Nasional).
-                Tugasmu adalah menyusun ISI (SUBSTANSI) Berita Acara (BA) berdasarkan data di bawah ini.
-
-                DATA MASUKAN:
-                ${textDasarHukum}
-                KENDALA/KRONOLOGI MASALAH: "${masalah}"
-
-                INSTRUKSI PENULISAN (WAJIB PATUH):
-                1. GAYA BAHASA: Formal, Birokratis, Baku (EYD V).
-                2. STRUKTUR PARAGRAF:
-                   - BRIDGING (Pembuka): Kalimat pengantar singkat.
-                   - POIN-POIN (Isi): Gunakan poin angka jika ada beberapa masalah.
-                   - CLOSING (Penutup/Kesimpulan): Kesimpulan singkat.
-                3. FORMATTING (PENTING):
-                   - Gunakan Markdown standard untuk Bold (**teks**) dan Italic (*teks*).
-                   - Gunakan list standard Markdown.
-                4. HINDARI:
-                   - Kata sambutan. Langsung ke isi.
-
-                OUTPUT YANG DIHARAPKAN:
-                Teks dalam format Markdown yang siap dikonversi ke HTML.
+            Role: Sekretaris Negara Profesional.
+            Tugas: Buat Isi Berita Acara yang SUBSTANTIF, PADAT, dan JELAS.
+            Masalah: "${m}". ${hk}
+            
+            INSTRUKSI STRUKTUR OUTPUT:
+            1. BRIDGING: 1 Kalimat pengantar formal. Contoh: "Berdasarkan evaluasi lapangan, disampaikan hal-hal berikut:"
+            2. ISI (Poin-Poin Markdown -): 
+               - Tulis poin dengan kalimat EFEKTIF dan LUGAS (To The Point).
+               - Tetap sertakan ALASAN/SEBAB-AKIBAT yang logis, tapi jangan bertele-tele.
+               - Fokus pada inti masalah/solusi.
+            3. CLOSING: 1 Kalimat penutup formal.
+            
+            LARANGAN:
+            - JANGAN ulangi kalimat pembuka "Pada hari ini...".
+            - JANGAN pakai bahasa puitis/berbunga-bunga.
+            - HINDARI kata sambung yang berlebihan.
             `;
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                const req = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${mod}:generateContent?key=${k}`, {
+                    method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})
                 });
-                const data = await response.json();
-                if (data.error) throw new Error(data.error.message);
+                const res = await req.json();
+                if(res.error) throw new Error(res.error.message);
                 
-                const textResult = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (textResult) {
-                    // CONVERT MARKDOWN TO HTML
-                    editor.innerHTML = marked.parse(textResult);
-                } else {
-                    editor.innerHTML = "Gemini membalas kosong.";
-                }
-            } catch (error) {
-                editor.innerHTML = `<span style="color:red">GAGAL BRO: ${error.message}</span>`;
-            } finally {
-                btn.innerHTML = '✨ GENERATE MAGIC'; btn.disabled = false;
-            }
+                let raw = res.candidates[0].content.parts[0].text;
+                let cleanHtml = marked.parse(raw);
+                
+                document.getElementById('editor').innerHTML = `<p>${pembuka}</p>` + cleanHtml;
+                Swal.fire('Selesai', 'Poin-poin padat & jelas sudah siap.', 'success');
+            } catch(e) { Swal.fire('Gagal', e.message, 'error'); }
         }
 
-        function generateSignatureLayout(signers) {
-            const createSignerBlock = (s) => ({
-                stack: [
-                    { text: (s.status || 'Mengetahui') + ',', fontSize: 10, alignment: 'center', margin: [0, 0, 0, 40] },
-                    { text: s.nama, decoration: 'underline', bold: true, fontSize: 10, alignment: 'center' },
-                    { text: s.jabatan, fontSize: 10, alignment: 'center' }
-                ]
-            });
-            if (signers.length <= 3) {
-                return { columns: signers.map(s => createSignerBlock(s)), columnGap: 10, margin: [0, 20, 0, 0] };
-            } else {
-                const splitIndex = Math.ceil(signers.length / 2); 
-                return { stack: [ { columns: signers.slice(0, splitIndex).map(s => createSignerBlock(s)), columnGap: 10, margin: [0, 20, 0, 20] }, { columns: signers.slice(splitIndex).map(s => createSignerBlock(s)), columnGap: 10 } ] };
-            }
-        }
-
+        // === PDF DOWNLOAD ===
         function downloadPDF() {
-            try {
-                const btn = document.getElementById('btnDownload');
-                btn.innerHTML = "⏳ Rendering...";
-                btn.disabled = true;
-
-                if (typeof pdfMake === 'undefined' || typeof htmlToPdfmake === 'undefined') throw new Error("Library PDF/HTML belum loading. Cek internet!");
-
-                const noSurat = document.getElementById('nomorSurat').value;
-                const namaInstansi = document.getElementById('namaInstansi').value;
-                const alamatInstansi = document.getElementById('alamatInstansi').value;
-                const alamatLengkap = document.getElementById('alamatLengkap').value;
-                const kontakInstansi = document.getElementById('kontakInstansi').value;
-                
-                // AMBIL KONTEN DARI DIV EDITOR (HTML)
-                const editorContent = document.getElementById('editor').innerHTML;
-                
-                if (editorContent.includes("GAGAL") || editorContent.includes("Sedang menunggu")) { 
-                     if(!confirm("Isi narasi masih kosong/error. Yakin mau download PDF kosong?")) {
-                       btn.disabled = false; btn.innerHTML = "📄 DOWNLOAD PDF FINAL"; return;
-                     }
+            const html = document.getElementById('editor').innerHTML;
+            if(html.includes("Isi Berita Acara")) return Swal.fire('Kosong','','warning');
+            
+            const val = htmlToPdfmake(html, {
+                defaultStyles: {
+                    p: { fontSize: 11, lineHeight: 1.25, margin: [0, 0, 0, 8], alignment: 'justify' },
+                    ul: { margin: [0, 0, 0, 8] },
+                    li: { fontSize: 11, lineHeight: 1.25, alignment: 'justify', margin:[0,0,0,4] }
                 }
-                if (listTTD.some(t => !t.nama)) {
-                    btn.disabled = false; btn.innerHTML = "📄 DOWNLOAD PDF FINAL"; return alert("Nama penanda tangan kosong.");
-                }
+            });
 
-                // CONVERT HTML EDITOR TO PDFMAKE JSON
-                const pdfContent = htmlToPdfmake(editorContent, {
-                    defaultStyles: {
-                        p: { fontSize: 11, lineHeight: 1.5, margin: [0, 5, 0, 5], alignment: 'justify' },
-                        ul: { margin: [0, 5, 0, 5] },
-                        ol: { margin: [0, 5, 0, 5] },
-                        li: { fontSize: 11, lineHeight: 1.5 }
+            const inst = document.getElementById('namaInstansi').value;
+            const almt = document.getElementById('alamatInstansi').value;
+            const almt2 = document.getElementById('alamatLengkap').value;
+            const kont = document.getElementById('kontakInstansi').value;
+
+            // HEADER: 3 Kolom
+            const headerTable = {
+                margin: [0, 0, 0, 5],
+                table: {
+                    widths: [80, '*', 80],
+                    body: [[
+                        { image:logoBase64||'', width:70, border:[false,false,false,false] },
+                        { 
+                            stack:[
+                                {text:inst, fontSize:14, bold:true},
+                                {text:almt, fontSize:10, bold:true},
+                                {text:almt2, fontSize:10},
+                                {text:kont, fontSize:9, italics:true}
+                            ], 
+                            alignment:'center', margin:[0,5,0,0], border:[false,false,false,false] 
+                        },
+                        { text:'', border:[false,false,false,false] }
+                    ]]
+                }, layout:'noBorders'
+            };
+
+            const ttdCols = listTTD.map(t=>({
+                stack:[
+                    {text:(t.s||'Mengetahui')+',', alignment:'center', margin:[0,0,0,50]},
+                    {text:t.n, bold:true, decoration:'underline', alignment:'center'},
+                    {text:t.j, alignment:'center', fontSize:10}
+                ]
+            }));
+            const ttdBlock = ttdCols.length<=2 ? {columns:ttdCols, columnGap:10} : {stack:[{columns:ttdCols.slice(0,2),columnGap:10,margin:[0,0,0,20]},{columns:ttdCols.slice(2),columnGap:10}]};
+
+            const d=new Date(document.getElementById('tglSurat').value);
+            const tglStr=`${d.getDate()} ${["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"][d.getMonth()]} ${d.getFullYear()}`;
+            const no=document.getElementById('noSuratFinal').value;
+
+            const docDefinition = {
+                pageSize: 'A4',
+                pageMargins: [85, 40, 56, 40], 
+                content: [
+                    logoBase64 ? headerTable : {text:inst, alignment:'center', fontSize:14, bold:true, margin:[0,0,0,10]},
+                    {canvas:[{type:'line', x1:0, y1:0, x2:460, y2:0, lineWidth:2, lineColor:'black'}], alignment:'center'}, 
+                    {canvas:[{type:'line', x1:0, y1:2, x2:460, y2:2, lineWidth:0.5, lineColor:'black'}], alignment:'center', margin:[0,0,0,20]},
+                    
+                    {text:'BERITA ACARA', fontSize:12, bold:true, decoration:'underline', alignment:'center'},
+                    {text:'Nomor: '+no, fontSize:11, alignment:'center', margin:[0, 0, 0, 20]},
+                    
+                    val,
+                    
+                    {text:'\n'},
+                    {
+                        unbreakable: true,
+                        stack: [
+                            {text:`Kulon Progo, ${tglStr}`, alignment:'center', margin:[0,0,0,10]},
+                            ttdBlock
+                        ]
                     }
-                });
-
-                const kopTextStack = [
-                    { text: namaInstansi, style: 'kopJudul', alignment: 'center' },
-                    { text: alamatInstansi, style: 'kopAlamat', alignment: 'center', bold: true },
-                    { text: alamatLengkap, style: 'kopAlamat', alignment: 'center' },
-                    { text: kontakInstansi, style: 'kopKontak', alignment: 'center', italics: true }
-                ];
-
-                let headerContent = [];
-                if (logoBase64) {
-                    headerContent = [ { columns: [ { image: logoBase64, width: 75, alignment: 'left' }, { stack: kopTextStack, width: '*' } ], columnGap: 10, margin: [0, 0, 0, 10] }, { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 515, y2: 5, lineWidth: 3 }] }, { canvas: [{ type: 'line', x1: 0, y1: 7, x2: 515, y2: 7, lineWidth: 1 }] } ];
-                } else {
-                    headerContent = [ ...kopTextStack, { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 515, y2: 5, lineWidth: 2 }] } ];
-                }
-
-                // LAYOUT BERSIH (TANPA BASA-BASI)
-                const docDefinition = {
-                    pageSize: 'A4', pageMargins: [60, 40, 60, 60],
-                    content: [ 
-                        ...headerContent, 
-                        { text: '\n' }, 
-                        { text: 'BERITA ACARA', style: 'judul' }, 
-                        { text: `Nomor: ${noSurat}`, style: 'nomor' }, 
-                        { text: '\n\n' }, 
-                        
-                        // ISI DARI EDITOR (SUDAH DI-CONVERT KE JSON)
-                        pdfContent,
-                        
-                        { text: '\n' }, 
-                        { text: 'Demikian Berita Acara ini dibuat dengan sesungguhnya.', style: 'body' }, 
-                        { text: '\n\n' }, 
-                        
-                        { text: `Kulon Progo, ${getSimpleDate(document.getElementById('tanggalSurat').value)}`, alignment: 'center', margin: [0, 0, 0, 10] },
-                        generateSignatureLayout(listTTD) 
-                    ],
-                    styles: { 
-                        kopJudul: { fontSize: 14, bold: true, alignment: 'center', margin: [0, 2, 0, 2] }, 
-                        kopAlamat: { fontSize: 11, alignment: 'center' }, 
-                        kopKontak: { fontSize: 10, alignment: 'center' }, 
-                        judul: { fontSize: 14, bold: true, alignment: 'center', decoration: 'underline' }, 
-                        nomor: { fontSize: 11, alignment: 'center' }, 
-                        body: { fontSize: 11, lineHeight: 1.5 } 
-                    }, 
-                    defaultStyle: { font: 'Roboto' }
-                };
-                
-                pdfMake.createPdf(docDefinition).download(`BA_${noSurat.replace(/[\/\\ ]/g, '-')}.pdf`);
-                
-                setTimeout(() => {
-                    btn.disabled = false;
-                    btn.innerHTML = "📄 DOWNLOAD PDF FINAL";
-                }, 2000);
-
-            } catch(e) {
-                alert("Sistem Crash: " + e.message);
-                document.getElementById('btnDownload').disabled = false;
-                document.getElementById('btnDownload').innerHTML = "📄 DOWNLOAD PDF FINAL";
-            }
+                ],
+                defaultStyle: { font: 'Roboto', fontSize: 11, lineHeight: 1.25 }
+            };
+            pdfMake.createPdf(docDefinition).download(`BA_${no.replace(/\//g,'-')}.pdf`);
         }
+
+        function updateNomor(){const n=document.getElementById('noUrut').value,d=new Date(document.getElementById('tglSurat').value),r=["","I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"];document.getElementById('noSuratFinal').value=`${n}/SPPG/${r[d.getMonth()+1]}/${d.getFullYear()}`;}
+        function cmd(c){document.execCommand(c,false,null);}
+        function togglePass(){const x=document.getElementById('apiKey');x.type=x.type==='password'?'text':'password';}
+        function toggleCase(){const s=window.getSelection(),t=s.toString();if(t)document.execCommand('insertText',false,t===t.toUpperCase()?t.toLowerCase():t.toUpperCase());}
+        function simpanApp(){Swal.fire({title:'Simpan App?',showCancelButton:true}).then(r=>{if(r.isConfirmed){let h=document.documentElement.outerHTML;h=h.replace("localStorage.getItem(CONFIG.logo)",`'${logoBase64||''}'`).replace("localStorage.getItem(CONFIG.api)||\"\"",`'${document.getElementById('apiKey').value}'`);const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([h],{type:'text/html'}));a.download='SPPG-BA-V21-Precision.html';a.click();}})}
     </script>
 </body>
 </html>
